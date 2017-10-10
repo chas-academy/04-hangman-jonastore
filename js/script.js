@@ -17,10 +17,11 @@ function init() {} // End init
 window.onload = init; // Se till att init aktiveras då sidan är inladdad
 
 // Funktion som startar spelet vid knapptryckning, och då tillkallas andra funktioner
-var gameStart(){
-	randomWord();
-	letterBoxes();
+var gameStart = function(){
+		return randomWord() + numberOfTiles();
 }
+
+document.getQuerySelector('#startGameBtn').addEventListener('click' gameStart);
 
 // Funktion som slumpar fram ett ord
 var randomWord = function() {
@@ -35,9 +36,14 @@ var numberOfTiles = function() {
 }
 
 // Funktion som körs när du trycker på bokstäverna och gissar bokstav
+var btnClick = function() {
+	document.getQuerySelector('.btn')//???
+};
+
 
 // Funktionen ropas vid vinst eller förlust, gör olika saker beroende av det
-//OM vinst så kalla på msgElem[0] OM förlust kalla på msgElem[1]
+//OM vinst så kalla på msgElem[0] OM förlust kalla på msgElem[1] och 
+//Kör disable på alla knappar så att spelaren måste trycka på start igen för att slumpa fram ett nytt ord.
 
 
 // Funktion som inaktiverar/aktiverar bokstavsknapparna beroende på vilken del av spelet du är på
