@@ -1,11 +1,11 @@
 // Globala variabler
 
-var wordList; // Lista med spelets alla ord
+var wordList = ['Blues', 'Rangers', 'Hurricanes', 'Pengiuns', 'Kings', 'Bruins', 'Jets']; // Lista med spelets alla ord
 var selectedWord; // Ett av orden valt av en slumpgenerator
-var letterBoxes; //Rutorna där bokstäverna ska stå
+var letterBoxes; //Rutorna där bokstäverna ska stå   // = selectedWord.length
 var hangmanImg; //Bild som kommer vid fel svar
 var hangmanImgNr; // Vilken av bilderna som kommer upp beroende på hur många fel du gjort
-var msgElem; // Ger meddelande när spelet är över
+var msgElem = "Du har förlorat."; // Ger meddelande när spelet är över
 var startGameBtn; // Knappen du startar spelet med
 var letterButtons; // Knapparna för bokstäverna
 var startTime; // Mäter tiden
@@ -19,8 +19,15 @@ window.onload = init; // Se till att init aktiveras då sidan är inladdad
 // Funktion som startar spelet vid knapptryckning, och då tillkallas andra funktioner
 
 // Funktion som slumpar fram ett ord
+var randomWord = function() {
+	selectedWord = wordList[Math.floor(Math.random() * wordList.length)];
+	return selectedWord;
+};
  
 // Funktionen som tar fram bokstävernas rutor, antal beror på vilket ord
+var numberOfTiles = function() {
+	letterBoxes = selectedWord.length;
+}
 
 // Funktion som körs när du trycker på bokstäverna och gissar bokstav
 
