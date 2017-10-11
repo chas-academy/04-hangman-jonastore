@@ -13,8 +13,15 @@ var startTime; // Mäter tiden
 // Funktion som körs då hela webbsidan är inladdad, dvs då all HTML-kod är utförd
 // Initiering av globala variabler samt koppling av funktioner till knapparna.
 function init() {
-	document.querySelector('#startGameBtn').addEventListener('click', gameStart());
 	var letterButtons = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'å', 'ä', 'ö']
+	var wordList = ['Blues', 'Rangers', 'Hurricanes', 'Pengiuns', 'Kings', 'Bruins', 'Jets']; // Lista med spelets alla ord
+	
+
+	startGameBtn;
+	letterButtons;
+	
+	document.querySelector('#startGameBtn').onclick = gameStart;
+	document.querySelector('#letterButtons').onclick = btnClick;
 
 } // End init
 
@@ -22,8 +29,14 @@ window.onload = init; // Se till att init aktiveras då sidan är inladdad
 
 // Funktion som startar spelet vid knapptryckning, och då tillkallas andra funktioner
 function gameStart(){
-		return randomWord() + numberOfTiles();
+	
+	randomWord();
+	numberOfTiles();
+
+	document.getElementById('hangman').src = "images/h0.png";
+
 }
+
 
 
 // Funktion som slumpar fram ett ord
@@ -34,13 +47,22 @@ function randomWord() {
  
 // Funktionen som tar fram bokstävernas rutor, antal beror på vilket ord
 function numberOfTiles() {
-	letterBoxes = selectedWord.length;
+	
+	var tile = [];
+
+	for (var i = 0; i < selectedWord.length; i++){
+		tile[i] = '<input type="text" value="&nbsp;" />'; //för varje bokstav i selectedWord ska tile få ett html-element.
+	}
+	document.querySelector('#letterBoxes').innerHTML = tile;
+
 	return letterBoxes;
 }
 
 // Funktion som körs när du trycker på bokstäverna och gissar bokstav
 function btnClick() {
-	document.getQuerySelector('.btn')//???
+
+	console.log('button click successful')
+	return;
 };
 
 
@@ -50,4 +72,4 @@ function btnClick() {
 
 
 // Funktion som inaktiverar/aktiverar bokstavsknapparna beroende på vilken del av spelet du är på
-//OM bokstaven är vald SÅ add innerHTML diabled på slutet av elementet
+//OM bokstaven är vald SÅ add innerHTML disabled på slutet av elementet
