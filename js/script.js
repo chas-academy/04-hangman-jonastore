@@ -1,7 +1,7 @@
 // Globala variabler
 
-//var wordList = ['BLUES', 'RANGERS', 'HURRICANES', 'PENGUINS', 'KINGS', 'BRUINS', 'JETS', 'GOLDEN KNIGHTS']; // Lista med spelets alla ord
-var wordList = ['CHAS ACADEMY']; // Lista med spelets alla ord
+var wordList = ['BLUES', 'RANGERS', 'HURRICANES', 'PENGUINS', 'KINGS', 'BRUINS', 'JETS', 'GOLDEN KNIGHTS', 'MIGHTY DUCKS']; // Lista med spelets alla ord
+//var wordList = ['CHAS ACADEMY']; // Lista med spelets alla ord
 //var wordList = ['APA'];
 var selectedWord; // Ett av orden valt av en slumpgenerator
 var letterBoxes; //Rutorna där bokstäverna ska stå   //
@@ -28,7 +28,6 @@ function init() {
 
 	document.querySelector('#startGameBtn').onclick = gameStart;
 
-
 	document.getElementById('hangman').src = "images/h0.png";
 
 	//document.querySelector('#letterButtons').onclick = btnClick;
@@ -47,6 +46,7 @@ function gameStart(){
 	randomWord();
 	numberOfTiles();
 	document.querySelector('#startGameBtn').disabled = true;
+	document.querySelector('#message').innerHTML = 'You have 6 guesses left!';
 
 }
 
@@ -108,7 +108,9 @@ function btnClick () {
 			 	listEls[i].firstChild.value = letterValue;
 			 	score++;
 			 	if (score === listEls.length){
-				alert('you win!');
+				document.querySelector('#message').innerHTML = 'Congratulations! You won!';
+				document.getElementById('hangman').src = "images/chicken.gif";
+				setTimeout(resetGame, 6000);
 				}
 			}
 			
@@ -116,24 +118,20 @@ function btnClick () {
 
 	} else {
 		hangmanLives++;
-		console.log('wrong button, hombre.')
 		incorrectGuess();
-		animate();
 	}
 
 };
 
-function correctGuess() {//(letterIndices, listEls)
-	if (score == listEls.length){
-		alert('you win!');
-	}
-};
 
 function incorrectGuess() {
+		animate();
 	if (hangmanLives > 5){
 		deactivateButtons();
 		//skapa en knapp som kallar på init och startar om spelet
 		document.querySelector('#title').innerHTML = 'YOU LOSE!';
+		document.getElementById('hangman').src = "images/youlost.gif";
+		setTimeout(resetGame, 5000);
 	};
 	// Keep track of number of guesses somehow...
 };
@@ -141,21 +139,27 @@ function incorrectGuess() {
 function animate() {
 	if (hangmanLives == 1){
 		document.getElementById('hangman').src = "images/h1.png";
+		document.querySelector('#message').innerHTML = 'You have 5 guesses left!';
 	}
 	if (hangmanLives == 2){
 		document.getElementById('hangman').src = "images/h2.png";
+		document.querySelector('#message').innerHTML = 'You have 4 guesses left!';
 	}
 	if (hangmanLives == 3){
 		document.getElementById('hangman').src = "images/h3.png";
+		document.querySelector('#message').innerHTML = 'You have 3 guesses left!';
 	}
 	if (hangmanLives == 4){
 		document.getElementById('hangman').src = "images/h4.png";
+		document.querySelector('#message').innerHTML = 'You have 2 guesses left!';
 	}
 	if (hangmanLives == 5){
 		document.getElementById('hangman').src = "images/h5.png";
+		document.querySelector('#message').innerHTML = 'You have 1 guess left!';
 	}
 	if (hangmanLives == 6){
 		document.getElementById('hangman').src = "images/h6.png";
+		document.querySelector('#message').innerHTML = 'You lose!';
 	}
 }
 
@@ -164,6 +168,10 @@ function deactivateButtons() {
 	for (i = 0; i < letterButtons.length; i++) {
 		  		letterButtons[i].disabled= true;
 	   }
+}
+
+function resetGame() {
+	location.reload();
 }
 
 // Funktionen ropas vid vinst eller förlust, gör olika saker beroende av det

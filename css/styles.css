@@ -30,7 +30,6 @@ header {
   -webkit-flex: none;
   -ms-flex: none;
   flex: none;
-  text-shadow: 0 0 5px #4DA4CB, 0 0 10px #4DA4CB, 0 0 15px #4DA4CB, 0 0 20px #4DA4CB, 0 0 35px #4DA4CB, 0 0 40px #4DA4CB, 0 0 50px #4DA4CB, 0 0 75px #4DA4CB;
 }
 
 header h1 {
@@ -221,3 +220,9 @@ footer {
   );
   border-top: 1px solid #000;
 }
+
+.btn--space {
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
