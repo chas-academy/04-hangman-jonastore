@@ -1,15 +1,18 @@
 // Globala variabler
 
-// var wordList = ['BLUES', 'RANGERS', 'HURRICANES', 'PENGUINS', 'KINGS', 'BRUINS', 'JETS']; // Lista med spelets alla ord
+//var wordList = ['BLUES', 'RANGERS', 'HURRICANES', 'PENGUINS', 'KINGS', 'BRUINS', 'JETS', 'GOLDEN KNIGHTS']; // Lista med spelets alla ord
 var wordList = ['CHAS ACADEMY']; // Lista med spelets alla ord
+//var wordList = ['APA'];
 var selectedWord; // Ett av orden valt av en slumpgenerator
 var letterBoxes; //Rutorna där bokstäverna ska stå   //
 var hangmanImg; //Bild som kommer vid fel svar
 var hangmanImgNr; // Vilken av bilderna som kommer upp beroende på hur många fel du gjort
 var msgElem; // Ger meddelande när spelet är över
 var startGameBtn; // Knappen du startar spelet med
-var letterButtons = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'å', 'ä', 'ö']
+//var letterButtons = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'å', 'ä', 'ö']
 var startTime; // Mäter tiden
+var hangmanLives = 0;
+var score = 0;
 //var letter;
 
 // Funktion som körs då hela webbsidan är inladdad, dvs då all HTML-kod är utförd
@@ -21,8 +24,13 @@ function init() {
 	startGameBtn;
 	letterButtons;
 
-	
+	document.querySelector('.btn').disabled = false;
+
 	document.querySelector('#startGameBtn').onclick = gameStart;
+
+
+	document.getElementById('hangman').src = "images/h0.png";
+
 	//document.querySelector('#letterButtons').onclick = btnClick;
 
 
@@ -38,12 +46,8 @@ function gameStart(){
 	
 	randomWord();
 	numberOfTiles();
+	document.querySelector('#startGameBtn').disabled = true;
 
-
-	document.getElementById('hangman').src = "images/h0.png";
-
-	// console.log(randomWord());	//temporär kontroll
-	// console.log(numberOfTiles());
 }
 
 
@@ -96,62 +100,74 @@ function btnClick () {
 
 		console.log(letterValue + '  finns på index ', letterIndices, 'i ord-arrayen: ',  selectedWord);
 		console.log(listEls);
-
-
 		//skriv en loop så att letterIndices matchar index-platserna i selectedWord/listEls!
 		for (let i = 0; i < selectedWord.length; i++){
 			
 			if(selectedWord[i] == letterValue){
-			 	listEls[i].firstChild.value = letterValue;	
+				this.disabled = true;
+			 	listEls[i].firstChild.value = letterValue;
+			 	score++;
+			 	if (score === listEls.length){
+				alert('you win!');
+				}
 			}
 			
 		}
 
 	} else {
-		// gissat fel
-		//wrongguess++; ???
+		hangmanLives++;
 		console.log('wrong button, hombre.')
+		incorrectGuess();
+		animate();
 	}
-
-	//console.log(letterIndices)
-
-	// 	for (let i = 0; i < selectedWord.length; i++) {
-					
-	// 		var index = selectedWord.indexOf(letterValue);			
-			
-	// 		if (letterValue === selectedWord[i]){		//  selectedWord.indexOf(letterValue)
-	// 			document.querySelector('#letter').value = letterValue;
-	// 			document.querySelector('#letter').id = index;
-	// 			console.log(index);
-	// 		}
-
-	// 		//TA FRAM ARRAYPLATSEN PÅ BOKSTAVEN OCH SKJUT FRAM BOKSTAVEN SÅ MÅNGA STEG I INPUT???   	
-	// 	console.log('RIGHT BUTTON WAS CLICKED')
-
-	// 	if (selectedWord.indexOf(letterValue) < -1){
-	// 		console.log('wrong')
-	// 		console.log(index);
-	// 		//mer skit här
-	// 	}
-	// }
-
-	// return;
 
 };
 
-function correctGuess(letterIndices, guessedLetter) {
-
+function correctGuess() {//(letterIndices, listEls)
+	if (score == listEls.length){
+		alert('you win!');
+	}
 };
 
 function incorrectGuess() {
-	//IF wrongguess > 6 THEN terminate process
+	if (hangmanLives > 5){
+		deactivateButtons();
+		//skapa en knapp som kallar på init och startar om spelet
+		document.querySelector('#title').innerHTML = 'YOU LOSE!';
+	};
 	// Keep track of number of guesses somehow...
 };
+
+function animate() {
+	if (hangmanLives == 1){
+		document.getElementById('hangman').src = "images/h1.png";
+	}
+	if (hangmanLives == 2){
+		document.getElementById('hangman').src = "images/h2.png";
+	}
+	if (hangmanLives == 3){
+		document.getElementById('hangman').src = "images/h3.png";
+	}
+	if (hangmanLives == 4){
+		document.getElementById('hangman').src = "images/h4.png";
+	}
+	if (hangmanLives == 5){
+		document.getElementById('hangman').src = "images/h5.png";
+	}
+	if (hangmanLives == 6){
+		document.getElementById('hangman').src = "images/h6.png";
+	}
+}
+
+// Funktion som inaktiverar/aktiverar bokstavsknapparna beroende på vilken del av spelet du är på
+function deactivateButtons() {
+	for (i = 0; i < letterButtons.length; i++) {
+		  		letterButtons[i].disabled= true;
+	   }
+}
 
 // Funktionen ropas vid vinst eller förlust, gör olika saker beroende av det
 //OM vinst så kalla på msgElem[0] OM förlust kalla på msgElem[1] och 
 //Kör disable på alla knappar så att spelaren måste trycka på start igen för att slumpa fram ett nytt ord.
 
 
-// Funktion som inaktiverar/aktiverar bokstavsknapparna beroende på vilken del av spelet du är på
-//OM bokstaven är vald SÅ add innerHTML disabled på slutet av elementet

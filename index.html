@@ -10,10 +10,13 @@
 
 <body>
     <header>
-        <h1>Mr. Hangman</h1>
+        <h1 id="title">Mr. Hangman</h1>
     </header>
     <main>
         <article>
+
+            <img id="hangman" src="#">
+
             <ul>
                 <li>
                     <!--meddelande-->
@@ -42,7 +45,7 @@
                 <li><button class="btn btn--stripe" type="button" value="Q">Q</button></li>
                 <li><button class="btn btn--stripe" type="button" value="R">R</button></li>
                 <li><button class="btn btn--stripe" type="button" value="S">S</button></li>
-                <li><button class="btn btn--stripe" type="button" value="T" >T</button></li>
+                <li><button class="btn btn--stripe" type="button" value="T">T</button></li>
                 <li><button class="btn btn--stripe" type="button" value="U">U</button></li>
                 <li><button class="btn btn--stripe" type="button" value="V">V</button></li>
                 <li><button class="btn btn--stripe" type="button" value="W">W</button></li>
@@ -51,7 +54,9 @@
                 <li><button class="btn btn--stripe" type="button" value="Z">Z</button></li>
                 <li><button class="btn btn--stripe" type="button" value="Å">Å</button></li>
                 <li><button class="btn btn--stripe" type="button" value="Ä">Ä</button></li>
-                <li><button class="btn btn--stripe" type="button" value="Ö" disabled>Ö</button></li>
+                <li><button class="btn btn--stripe" type="button" value="Ö">Ö</button></li>
+                <li><button class="btn btn--stripe btn--space" type="button" value="-">space</button></li>
+
             </ul>
             <section id="letterBoxes">
                 <!-- This is where the matched letters should appear, these should match the number of -->
@@ -69,7 +74,6 @@
 
                 </ul>
             </section>
-            <img id="hangman" src="#">
         </section>
         <section id="message">
             <!-- This is where messages should appear -->
