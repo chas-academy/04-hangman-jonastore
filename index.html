@@ -10,18 +10,14 @@
 
 <body>
     <header>
-        <h1>Uppgift 05 - Hangman</h1>
+        <h1>Mr. Hangman</h1>
     </header>
     <main>
         <article>
-            <h2>Välkommen till spelet Hänga gubbe.</h2>
-            <p>När du trycker på starta spelet, kommer datorn att välja ett ord slumpmässigt. <br/>
-               Det kommer då dyka upp ett visst antal fält som motsvarar antalet bokstäver i ordet. <br/> 
-               Ditt mål är att gissa ordet genom att trycka på bokstavsknapparna.<br/>
-               För varje bokstav du gissar rätt, så fylls dyker det upp en bokstav i på den plats som bokstaven du gissade på motsvarar i ordet.
-            </p>
             <ul>
-                <li>Övriga regler</li>
+                <li>
+                    <!--meddelande-->
+                </li>
             </ul>
         </article>
         <button class="btn btn--stripe" type="button" id="startGameBtn">Starta spelet</button>
@@ -46,7 +42,7 @@
                 <li><button class="btn btn--stripe" type="button" value="Q">Q</button></li>
                 <li><button class="btn btn--stripe" type="button" value="R">R</button></li>
                 <li><button class="btn btn--stripe" type="button" value="S">S</button></li>
-                <li><button class="btn btn--stripe" type="button" value="T" disabled>T</button></li> <!--disabled? if the letter is guessed-->
+                <li><button class="btn btn--stripe" type="button" value="T" >T</button></li>
                 <li><button class="btn btn--stripe" type="button" value="U">U</button></li>
                 <li><button class="btn btn--stripe" type="button" value="V">V</button></li>
                 <li><button class="btn btn--stripe" type="button" value="W">W</button></li>
@@ -55,11 +51,11 @@
                 <li><button class="btn btn--stripe" type="button" value="Z">Z</button></li>
                 <li><button class="btn btn--stripe" type="button" value="Å">Å</button></li>
                 <li><button class="btn btn--stripe" type="button" value="Ä">Ä</button></li>
-                <li><button class="btn btn--stripe" type="button" value="Ö">Ö</button></li>
+                <li><button class="btn btn--stripe" type="button" value="Ö" disabled>Ö</button></li>
             </ul>
             <section id="letterBoxes">
                 <!-- This is where the matched letters should appear, these should match the number of -->
-                <!--<ul>-->
+                <ul>
                     <!--<li><input type="text" disabled value="&nbsp;" /></li>
                     <li><input type="text" disabled value="&nbsp;" /></li>
                     <li><input type="text" disabled value="&nbsp;" /></li>
@@ -71,7 +67,7 @@
                     <li><input type="text" disabled value="&nbsp;"  /></li>
                     <li><input type="text" disabled value="&nbsp;"  /></li>-->
 
-                <!--</ul>-->
+                </ul>
             </section>
             <img id="hangman" src="#">
         </section>
@@ -80,7 +76,7 @@
         </section>
     </main>
     <footer>
-        Chas Academy - Hangman
+        <!--Chas Academy - Hangman-->
     </footer>
 </body>
 

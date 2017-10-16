@@ -7,6 +7,7 @@
 }
 
 body {
+  background-color: pink;
   color: #666;
   font-family: sans-serif;
   display: -webkit-box;
@@ -23,12 +24,13 @@ body {
 }
 
 header {
-  background-color: silver;
+  background: pink;
   color: #fff;
   -webkit-box-flex: 0;
   -webkit-flex: none;
   -ms-flex: none;
   flex: none;
+  text-shadow: 0 0 5px #4DA4CB, 0 0 10px #4DA4CB, 0 0 15px #4DA4CB, 0 0 20px #4DA4CB, 0 0 35px #4DA4CB, 0 0 40px #4DA4CB, 0 0 50px #4DA4CB, 0 0 75px #4DA4CB;
 }
 
 header h1 {
@@ -76,11 +78,10 @@ ul {
 }
 
 footer {
-  background-color: silver;
-  border-top: 1px solid #666;
+  background: linear-gradient(pink, lightblue);
   margin-top: 20px;
   padding-top: 30px;
-  color: #fff;
+  color: #667;
   font-size: 1.25em;
   width: 100%;
   flex: none;
