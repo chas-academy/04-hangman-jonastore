@@ -28,7 +28,7 @@ function init() {
 
 	document.querySelector('#startGameBtn').onclick = gameStart;
 
-	document.getElementById('hangman').src = "images/h0.png";
+	document.getElementById('hangman').src = "images/sticks.png";
 
 	//document.querySelector('#letterButtons').onclick = btnClick;
 
@@ -46,6 +46,7 @@ function gameStart(){
 	randomWord();
 	numberOfTiles();
 	document.querySelector('#startGameBtn').disabled = true;
+		document.getElementById('hangman').src = "images/h0.png";
 	document.querySelector('#message').innerHTML = 'You have 6 guesses left!';
 
 }
@@ -109,7 +110,7 @@ function btnClick () {
 			 	score++;
 			 	if (score === listEls.length){
 				document.querySelector('#message').innerHTML = 'Congratulations! You won!';
-				document.getElementById('hangman').src = "images/chicken.gif";
+				document.getElementById('hangman').src = "images/win.png";
 				setTimeout(resetGame, 6000);
 				}
 			}
@@ -129,8 +130,6 @@ function incorrectGuess() {
 	if (hangmanLives > 5){
 		deactivateButtons();
 		//skapa en knapp som kallar på init och startar om spelet
-		document.querySelector('#title').innerHTML = 'YOU LOSE!';
-		document.getElementById('hangman').src = "images/youlost.gif";
 		setTimeout(resetGame, 5000);
 	};
 	// Keep track of number of guesses somehow...
@@ -159,7 +158,7 @@ function animate() {
 	}
 	if (hangmanLives == 6){
 		document.getElementById('hangman').src = "images/h6.png";
-		document.querySelector('#message').innerHTML = 'You lose!';
+		document.querySelector('#message').innerHTML = 'You lose! The right answer was "' + selectedWord.join("").toLowerCase() + '"!'; 
 	}
 }
 
