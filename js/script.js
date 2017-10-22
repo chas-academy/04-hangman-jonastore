@@ -1,8 +1,11 @@
 // Globala variabler
 
-var wordList = ['BLUES', 'RANGERS', 'HURRICANES', 'PENGUINS', 'KINGS', 'BRUINS', 'JETS', 'GOLDEN KNIGHTS', 'MIGHTY DUCKS']; // Lista med spelets alla ord
-//var wordList = ['CHAS ACADEMY']; // Lista med spelets alla ord
-//var wordList = ['APA'];
+var wordList = ['BLUES', 'RANGERS', 'HURRICANES', 'PENGUINS', 'KINGS', 'BRUINS', 'JETS', 'GOLDEN KNIGHTS', 'MIGHTY DUCKS', 'MAPLE LEAVES', 'LIGHTNING', 'BLACK HAWKS']; // Lista med spelets alla ord
+var clues = ['St Louis', 'New York', 'Carolina', 'Pittburgh', 'Los Angeles', 'Boston', 'Winnipeg', 'Las Vegas', 'Anaheim', 'Toronto', 'Tampa Bay', 'Chicago'];
+
+
+
+var hint;
 var selectedWord; // Ett av orden valt av en slumpgenerator
 var letterBoxes; //Rutorna där bokstäverna ska stå   //
 var hangmanImg; //Bild som kommer vid fel svar
@@ -18,29 +21,20 @@ var score = 0;
 // Funktion som körs då hela webbsidan är inladdad, dvs då all HTML-kod är utförd
 // Initiering av globala variabler samt koppling av funktioner till knapparna.
 function init() {
-	//var letterButtons = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'å', 'ä', 'ö']
-	//var wordList = ['Blues', 'Rangers', 'Hurricanes', 'Pengiuns', 'Kings', 'Bruins', 'Jets']; // Lista med spelets alla ord
-	
+
 	startGameBtn;
 	letterButtons;
 
 	document.querySelector('.btn').disabled = false;
-
 	document.querySelector('#startGameBtn').onclick = gameStart;
-
 	document.getElementById('hangman').src = "images/sticks.png";
-
 	//document.querySelector('#letterButtons').onclick = btnClick;
-
-
-
-
 
 } // End init
 
-window.onload = init; // Se till att init aktiveras då sidan är inladdad
+window.onload = init; //Automatically cals init()
 
-// Funktion som startar spelet vid knapptryckning, och då tillkallas andra funktioner
+//Function that is called when the game starts, in turn calling other functions needed to play the game.
 function gameStart(){
 	
 	randomWord();
@@ -48,11 +42,24 @@ function gameStart(){
 	document.querySelector('#startGameBtn').disabled = true;
 		document.getElementById('hangman').src = "images/h0.png";
 	document.querySelector('#message').innerHTML = 'You have 6 guesses left!';
-
 }
 
 
-// Funktion som slumpar fram ett ord
+//funktion som ger en ledtråd baserat på ordet
+function clue(){
+		
+
+	//for (let i = 0; i < selectedWord.length; i++){
+	//	if (wordList = clues[i]){
+	//	document.querySelector('#message').innerHTML = "The team plays for the city of " + clues[i];
+	//	}
+	//}
+	
+	
+}
+
+
+//Function that generates a random word from the wordList-array
 function randomWord() {
 
 	letterButtons = document.getElementsByTagName("button");
@@ -68,7 +75,7 @@ function randomWord() {
 };
 
  
-// Funktionen som tar fram bokstävernas rutor, antal beror på vilket ord
+//Function that generates the correct amount in input tiles according to the randomly generated word
 function numberOfTiles() {
 	letterBoxes = document.querySelector('#letterBoxes > ul'); //
 	let letterBox;
@@ -82,7 +89,7 @@ function numberOfTiles() {
 	return letterBoxes;
 }
 
-// Funktion som körs när du trycker på bokstäverna och gissar bokstav
+//Function that runs when you click each of the letter buttons
 function btnClick () {
 	var letterValue = this.value;
 
@@ -101,7 +108,7 @@ function btnClick () {
 
 		console.log(letterValue + '  finns på index ', letterIndices, 'i ord-arrayen: ',  selectedWord);
 		console.log(listEls);
-		//skriv en loop så att letterIndices matchar index-platserna i selectedWord/listEls!
+
 		for (let i = 0; i < selectedWord.length; i++){
 			
 			if(selectedWord[i] == letterValue){
@@ -111,7 +118,7 @@ function btnClick () {
 			 	if (score === listEls.length){
 				document.querySelector('#message').innerHTML = 'Congratulations! You won!';
 				document.getElementById('hangman').src = "images/win.png";
-				setTimeout(resetGame, 6000);
+				setTimeout(resetGame, 3500);
 				}
 			}
 			
@@ -120,11 +127,12 @@ function btnClick () {
 	} else {
 		hangmanLives++;
 		incorrectGuess();
+		this.disabled = true;
 	}
 
 };
 
-
+//Funtion that runs if the number of guesses surpass 6
 function incorrectGuess() {
 		animate();
 	if (hangmanLives > 5){
@@ -135,34 +143,35 @@ function incorrectGuess() {
 	// Keep track of number of guesses somehow...
 };
 
+//Function that animates the hangman
 function animate() {
 	if (hangmanLives == 1){
-		document.getElementById('hangman').src = "images/h1.png";
+		document.getElementById('hangman').src = "images/h1.PNG";
 		document.querySelector('#message').innerHTML = 'You have 5 guesses left!';
 	}
 	if (hangmanLives == 2){
-		document.getElementById('hangman').src = "images/h2.png";
+		document.getElementById('hangman').src = "images/h2.PNG";
 		document.querySelector('#message').innerHTML = 'You have 4 guesses left!';
 	}
 	if (hangmanLives == 3){
-		document.getElementById('hangman').src = "images/h3.png";
+		document.getElementById('hangman').src = "images/h3.PNG";
 		document.querySelector('#message').innerHTML = 'You have 3 guesses left!';
 	}
 	if (hangmanLives == 4){
-		document.getElementById('hangman').src = "images/h4.png";
+		document.getElementById('hangman').src = "images/h4.PNG";
 		document.querySelector('#message').innerHTML = 'You have 2 guesses left!';
 	}
 	if (hangmanLives == 5){
-		document.getElementById('hangman').src = "images/h5.png";
+		document.getElementById('hangman').src = "images/h5.PNG";
 		document.querySelector('#message').innerHTML = 'You have 1 guess left!';
 	}
 	if (hangmanLives == 6){
-		document.getElementById('hangman').src = "images/h6.png";
+		document.getElementById('hangman').src = "images/h6.PNG";
 		document.querySelector('#message').innerHTML = 'You lose! The right answer was "' + selectedWord.join("").toLowerCase() + '"!'; 
 	}
 }
 
-// Funktion som inaktiverar/aktiverar bokstavsknapparna beroende på vilken del av spelet du är på
+// Function that deactivaes the buttons
 function deactivateButtons() {
 	for (i = 0; i < letterButtons.length; i++) {
 		  		letterButtons[i].disabled= true;
@@ -173,8 +182,4 @@ function resetGame() {
 	location.reload();
 }
 
-// Funktionen ropas vid vinst eller förlust, gör olika saker beroende av det
-//OM vinst så kalla på msgElem[0] OM förlust kalla på msgElem[1] och 
-//Kör disable på alla knappar så att spelaren måste trycka på start igen för att slumpa fram ett nytt ord.
-
-
+//todo: modal popup, clues?
