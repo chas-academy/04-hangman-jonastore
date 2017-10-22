@@ -3,8 +3,6 @@
 var wordList = ['BLUES', 'RANGERS', 'HURRICANES', 'PENGUINS', 'KINGS', 'BRUINS', 'JETS', 'GOLDEN KNIGHTS', 'MIGHTY DUCKS', 'MAPLE LEAVES', 'LIGHTNING', 'BLACK HAWKS']; // Lista med spelets alla ord
 var clues = ['St Louis', 'New York', 'Carolina', 'Pittburgh', 'Los Angeles', 'Boston', 'Winnipeg', 'Las Vegas', 'Anaheim', 'Toronto', 'Tampa Bay', 'Chicago'];
 
-
-
 var hint;
 var selectedWord; // Ett av orden valt av en slumpgenerator
 var letterBoxes; //Rutorna där bokstäverna ska stå   //
@@ -14,7 +12,8 @@ var msgElem; // Ger meddelande när spelet är över
 var startGameBtn; // Knappen du startar spelet med
 //var letterButtons = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'å', 'ä', 'ö']
 var startTime; // Mäter tiden
-var hangmanLives = 0;
+var hangmanLives = 6;
+//var guessesLeft = 6;
 var score = 0;
 //var letter;
 
@@ -37,10 +36,12 @@ window.onload = init; //Automatically cals init()
 //Function that is called when the game starts, in turn calling other functions needed to play the game.
 function gameStart(){
 	
+	modal()
+
 	randomWord();
 	numberOfTiles();
 	document.querySelector('#startGameBtn').disabled = true;
-		document.getElementById('hangman').src = "images/h0.png";
+		document.getElementById('hangman').src = "images/h6.png";
 	document.querySelector('#message').innerHTML = 'You have 6 guesses left!';
 }
 
@@ -125,7 +126,7 @@ function btnClick () {
 		}
 
 	} else {
-		hangmanLives++;
+		hangmanLives--;
 		incorrectGuess();
 		this.disabled = true;
 	}
@@ -135,40 +136,22 @@ function btnClick () {
 //Funtion that runs if the number of guesses surpass 6
 function incorrectGuess() {
 		animate();
-	if (hangmanLives > 5){
+	if (hangmanLives === 0){
 		deactivateButtons();
-		//skapa en knapp som kallar på init och startar om spelet
 		setTimeout(resetGame, 5000);
 	};
-	// Keep track of number of guesses somehow...
 };
 
-//Function that animates the hangman
+//Function that animates the hangman and displays the correct messages
 function animate() {
-	if (hangmanLives == 1){
-		document.getElementById('hangman').src = "images/h1.PNG";
-		document.querySelector('#message').innerHTML = 'You have 5 guesses left!';
-	}
-	if (hangmanLives == 2){
-		document.getElementById('hangman').src = "images/h2.PNG";
-		document.querySelector('#message').innerHTML = 'You have 4 guesses left!';
-	}
-	if (hangmanLives == 3){
-		document.getElementById('hangman').src = "images/h3.PNG";
-		document.querySelector('#message').innerHTML = 'You have 3 guesses left!';
-	}
-	if (hangmanLives == 4){
-		document.getElementById('hangman').src = "images/h4.PNG";
-		document.querySelector('#message').innerHTML = 'You have 2 guesses left!';
-	}
-	if (hangmanLives == 5){
-		document.getElementById('hangman').src = "images/h5.PNG";
-		document.querySelector('#message').innerHTML = 'You have 1 guess left!';
-	}
-	if (hangmanLives == 6){
-		document.getElementById('hangman').src = "images/h6.PNG";
-		document.querySelector('#message').innerHTML = 'You lose! The right answer was "' + selectedWord.join("").toLowerCase() + '"!'; 
-	}
+
+	hangManAnimation = 'images/h' + hangmanLives + '.PNG';
+	document.querySelector('#hangman').src = hangManAnimation;
+	document.querySelector('#message').innerHTML = 'You have ' + hangmanLives + ' guesses left!';
+	if (hangmanLives === 0){
+			document.querySelector('#message').innerHTML = 'You lose!';
+	} 
+
 }
 
 // Function that deactivaes the buttons
@@ -182,4 +165,9 @@ function resetGame() {
 	location.reload();
 }
 
-//todo: modal popup, clues?
+function modal() {
+	document.querySelector('#modal').style.display = block;
+
+}
+
+//todo: modal popup
