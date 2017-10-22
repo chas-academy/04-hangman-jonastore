@@ -188,3 +188,8 @@ footer {
   border-radius: 15px;
   /*transition: 1s;*/
 }
+
+#timer {
+  margin-top: 1.5%;
+  text-align: center;
+}

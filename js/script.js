@@ -7,7 +7,9 @@ var selectedWord; // Ett av orden valt av en slumpgenerator
 var letterBoxes; //Rutorna där bokstäverna ska stå   //
 var startGameBtn; // Knappen du startar spelet med
 
-var startTime = 10;
+	var timeCounter = setInterval(counter, 1000);
+
+var startTime = 30;
 
 var hangmanLives = 6;
 var score = 0;
@@ -31,7 +33,7 @@ window.onload = init; //Automatically cals init()
 //Function that is called when the game starts, in turn calling other functions needed to play the game.
 function gameStart(){
 	
-	timer();
+	counter();
 	randomWord();
 	numberOfTiles();
 	document.querySelector('#startGameBtn').disabled = true;
@@ -100,6 +102,8 @@ function btnClick () {
 				document.querySelector('#message').innerHTML = 'Congratulations! You won!';
 				document.getElementById('hangman').src = "images/win.png";
 				setTimeout(resetGame, 3500);
+				clearInterval(timeCounter);
+				document.querySelector('#timer').innerHTML = 'You finished with ' + startTime + ' seconds left! Good job!';
 				}
 			}
 			
@@ -109,6 +113,9 @@ function btnClick () {
 		hangmanLives--;
 		incorrectGuess();
 		this.disabled = true;
+		clearInterval(timeCounter);
+		document.querySelector('#timer').innerHTML = ' ';
+
 	}
 
 };
@@ -145,23 +152,20 @@ function resetGame() {
 	location.reload();
 }
 
-function timer() {
 
-	
 	function counter() {
+				document.querySelector('#timer').innerHTML = 'You have ' + startTime + ' seconds left';	
+
 	startTime--;
-	document.querySelector('#timer').innerHTML = 'you have ' + startTime + ' seconds left';
+	document.querySelector('#timer').innerHTML = 'You have ' + startTime + ' seconds left';
 	
 	if (startTime === 0){
 		deactivateButtons();
-		var interval = setTimeout(resetGame, 3000);
+		setTimeout(resetGame, 3000);
 		document.querySelector('#message').innerHTML = 'You lose!';
-		document.querySelector('#timer').innerHTML = 'You ran out of time!';
 		document.getElementById('hangman').src = "images/h0.png";
 		clearInterval(timeCounter);
+		}
 	}
-	}
-	var timeCounter = setInterval(counter, 1000);
 
-}
 
