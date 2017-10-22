@@ -36,12 +36,11 @@ window.onload = init; //Automatically cals init()
 //Function that is called when the game starts, in turn calling other functions needed to play the game.
 function gameStart(){
 	
-	modal()
 
 	randomWord();
 	numberOfTiles();
 	document.querySelector('#startGameBtn').disabled = true;
-		document.getElementById('hangman').src = "images/h6.png";
+	document.getElementById('hangman').src = "images/h6.png";
 	document.querySelector('#message').innerHTML = 'You have 6 guesses left!';
 }
 
@@ -165,9 +164,3 @@ function resetGame() {
 	location.reload();
 }
 
-function modal() {
-	document.querySelector('#modal').style.display = block;
-
-}
-
-//todo: modal popup
