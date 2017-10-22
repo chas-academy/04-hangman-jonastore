@@ -1,21 +1,16 @@
 // Globala variabler
 
 var wordList = ['BLUES', 'RANGERS', 'HURRICANES', 'PENGUINS', 'KINGS', 'BRUINS', 'JETS', 'GOLDEN KNIGHTS', 'MIGHTY DUCKS', 'MAPLE LEAVES', 'LIGHTNING', 'BLACK HAWKS']; // Lista med spelets alla ord
-var clues = ['St Louis', 'New York', 'Carolina', 'Pittburgh', 'Los Angeles', 'Boston', 'Winnipeg', 'Las Vegas', 'Anaheim', 'Toronto', 'Tampa Bay', 'Chicago'];
 
-var hint;
+
 var selectedWord; // Ett av orden valt av en slumpgenerator
 var letterBoxes; //Rutorna där bokstäverna ska stå   //
-var hangmanImg; //Bild som kommer vid fel svar
-var hangmanImgNr; // Vilken av bilderna som kommer upp beroende på hur många fel du gjort
-var msgElem; // Ger meddelande när spelet är över
 var startGameBtn; // Knappen du startar spelet med
-//var letterButtons = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'å', 'ä', 'ö']
-var startTime; // Mäter tiden
+
+var startTime = 10;
+
 var hangmanLives = 6;
-//var guessesLeft = 6;
 var score = 0;
-//var letter;
 
 // Funktion som körs då hela webbsidan är inladdad, dvs då all HTML-kod är utförd
 // Initiering av globala variabler samt koppling av funktioner till knapparna.
@@ -36,26 +31,12 @@ window.onload = init; //Automatically cals init()
 //Function that is called when the game starts, in turn calling other functions needed to play the game.
 function gameStart(){
 	
-
+	timer();
 	randomWord();
 	numberOfTiles();
 	document.querySelector('#startGameBtn').disabled = true;
 	document.getElementById('hangman').src = "images/h6.png";
 	document.querySelector('#message').innerHTML = 'You have 6 guesses left!';
-}
-
-
-//funktion som ger en ledtråd baserat på ordet
-function clue(){
-		
-
-	//for (let i = 0; i < selectedWord.length; i++){
-	//	if (wordList = clues[i]){
-	//	document.querySelector('#message').innerHTML = "The team plays for the city of " + clues[i];
-	//	}
-	//}
-	
-	
 }
 
 
@@ -162,5 +143,25 @@ function deactivateButtons() {
 
 function resetGame() {
 	location.reload();
+}
+
+function timer() {
+
+	
+	function counter() {
+	startTime--;
+	document.querySelector('#timer').innerHTML = 'you have ' + startTime + ' seconds left';
+	
+	if (startTime === 0){
+		deactivateButtons();
+		var interval = setTimeout(resetGame, 3000);
+		document.querySelector('#message').innerHTML = 'You lose!';
+		document.querySelector('#timer').innerHTML = 'You ran out of time!';
+		document.getElementById('hangman').src = "images/h0.png";
+		clearInterval(timeCounter);
+	}
+	}
+	var timeCounter = setInterval(counter, 1000);
+
 }
 
