@@ -1,4 +1,3 @@
-
 var wordList = ['BLUES', 'RANGERS', 'HURRICANES', 'PENGUINS', 'KINGS', 'BRUINS', 'JETS', 'GOLDEN KNIGHTS', 'MIGHTY DUCKS', 'MAPLE LEAVES', 'LIGHTNING', 'BLACK HAWKS']; // Lista med spelets alla ord
 
 var selectedWord; // Ett av orden valt av en slumpgenerator
@@ -16,131 +15,128 @@ var score = 0;
 function init() {
 
 
-	document.querySelector('.btn').disabled = false;
-	document.querySelector('#startGameBtn').onclick = gameStart;
-	document.getElementById('hangman').src = "images/sticks.png";
-	//document.querySelector('#letterButtons').onclick = btnClick;
+    document.querySelector('.btn').disabled = false;
+    document.querySelector('#startGameBtn').onclick = gameStart;
+    document.getElementById('hangman').src = "images/sticks.png";
+    //document.querySelector('#letterButtons').onclick = btnClick;
 
 } // End init
 
 window.onload = init; //Automatically cals init()
 
 //Function that is called when the game starts, in turn calling other functions needed to play the game.
-function gameStart(){
-	
-	randomWord();
-	numberOfTiles();
-	document.querySelector('#startGameBtn').disabled = true;
-	document.getElementById('hangman').src = "images/h6.png";
-	document.querySelector('#message').innerHTML = 'You have 6 guesses left!';
+function gameStart() {
+
+    randomWord();
+    numberOfTiles();
+    document.querySelector('#startGameBtn').disabled = true;
+    document.getElementById('hangman').src = "images/h6.png";
+    document.querySelector('#message').innerHTML = 'You have 6 guesses left!';
 }
 
 
 //Function that generates a random word from the wordList-array
 function randomWord() {
 
-	letterButtons = document.getElementsByTagName("button");
-          for (let i = 0; i < letterButtons.length; i++){    
-         	 letterButtons[i].onclick = btnClick;
+    letterButtons = document.getElementsByTagName("button");
+    for (let i = 0; i < letterButtons.length; i++) {
+        letterButtons[i].onclick = btnClick;
     }
 
-	selectedWord = wordList[Math.floor(Math.random() * wordList.length)];
-	selectedWord = selectedWord.replace(" ", "-").split("");
+    selectedWord = wordList[Math.floor(Math.random() * wordList.length)];
+    selectedWord = selectedWord.replace(" ", "-").split("");
 
-	
-	return selectedWord;
+
+    return selectedWord;
 };
 
- 
+
 //Function that generates the correct amount in input tiles according to the randomly generated word
 function numberOfTiles() {
-	letterBoxes = document.querySelector('#letterBoxes > ul'); //
-	let letterBox;
+    letterBoxes = document.querySelector('#letterBoxes > ul'); //
+    let letterBox;
 
-	for (let i = 0; i < selectedWord.length; i++){
-		letterBox = document.createElement('li');
-		letterBox.innerHTML = '<input type="text" value="&nbsp;" id="letter"/>';
-		letterBoxes.appendChild(letterBox);
-	}
+    for (let i = 0; i < selectedWord.length; i++) {
+        letterBox = document.createElement('li');
+        letterBox.innerHTML = '<input type="text" value="&nbsp;" id="letter"/>';
+        letterBoxes.appendChild(letterBox);
+    }
 
-	return letterBoxes;
+    return letterBoxes;
 }
 
 //Function that runs when you click each of the letter buttons
-function btnClick () {
-	var letterValue = this.value;
+function btnClick() {
+    var letterValue = this.value;
 
-	console.log('The letter is: ', letterValue);
+    console.log('The letter is: ', letterValue);
 
-	var letterIndices = []; // the indices for the letter
-	var letterIndex = selectedWord.indexOf(letterValue);			
+    var letterIndices = []; // the indices for the letter
+    var letterIndex = selectedWord.indexOf(letterValue);
 
-	while(letterIndex !== -1) {
-		letterIndices.push(letterIndex);
-		letterIndex = selectedWord.indexOf(letterValue, letterIndex + 1);
-	}
+    while (letterIndex !== -1) {
+        letterIndices.push(letterIndex);
+        letterIndex = selectedWord.indexOf(letterValue, letterIndex + 1);
+    }
 
-	if (letterIndices.length > 0) {
-		let listEls = letterBoxes.children;
+    if (letterIndices.length > 0) {
+        let listEls = letterBoxes.children;
 
-		console.log(letterValue + '  finns på index ', letterIndices, 'i ord-arrayen: ',  selectedWord);
-		console.log(listEls);
+        console.log(letterValue + '  finns på index ', letterIndices, 'i ord-arrayen: ', selectedWord);
+        console.log(listEls);
 
-		for (let i = 0; i < selectedWord.length; i++){
-			
-			if(selectedWord[i] == letterValue){
-				this.disabled = true;
-			 	listEls[i].firstChild.value = letterValue;
-			 	score++;
-			 	if (score === listEls.length){
-				document.querySelector('#message').innerHTML = 'Congratulations! You won!';
-				document.getElementById('hangman').src = "images/win.png";
-				setTimeout(resetGame, 3500);
-				}
-			}
-			
-		}
+        for (let i = 0; i < selectedWord.length; i++) {
 
-	} else {
-		hangmanLives--;
-		incorrectGuess();
-		this.disabled = true;
+            if (selectedWord[i] == letterValue) {
+                this.disabled = true;
+                listEls[i].firstChild.value = letterValue;
+                score++;
+                if (score === listEls.length) {
+                    document.querySelector('#message').innerHTML = 'Congratulations! You won!';
+                    document.getElementById('hangman').src = "images/win.png";
+                    setTimeout(resetGame, 3500);
+                }
+            }
 
-	}
+        }
+
+    } else {
+        hangmanLives--;
+        incorrectGuess();
+        this.disabled = true;
+
+    }
 
 };
 
 //Funtion that runs if the number of guesses surpass 6
 function incorrectGuess() {
-		animate();
-	if (hangmanLives === 0){
-		deactivateButtons();
-		setTimeout(resetGame, 5000);
-	};
+    animate();
+    if (hangmanLives === 0) {
+        deactivateButtons();
+        setTimeout(resetGame, 5000);
+    };
 };
 
 //Function that animates the hangman and displays the correct messages
 function animate() {
 
-	hangManAnimation = 'images/h' + hangmanLives + '.PNG';
-	document.querySelector('#hangman').src = hangManAnimation;
-	document.querySelector('#message').innerHTML = 'You have ' + hangmanLives + ' guesses left!';
-	if (hangmanLives === 0){
-			document.querySelector('#message').innerHTML = 'You lose!';
-	} 
+    hangManAnimation = 'images/h' + hangmanLives + '.PNG';
+    document.querySelector('#hangman').src = hangManAnimation;
+    document.querySelector('#message').innerHTML = 'You have ' + hangmanLives + ' guesses left!';
+    if (hangmanLives === 0) {
+        document.querySelector('#message').innerHTML = 'You lose!';
+    }
 
 }
 
 // Function that deactivaes the buttons
 function deactivateButtons() {
-	for (i = 0; i < letterButtons.length; i++) {
-		  		letterButtons[i].disabled= true;
-	   }
+    for (i = 0; i < letterButtons.length; i++) {
+        letterButtons[i].disabled = true;
+    }
 }
 
 function resetGame() {
-	location.reload();
+    location.reload();
 }
-
-
-
