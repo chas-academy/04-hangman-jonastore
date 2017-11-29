@@ -1,13 +1,12 @@
-// Globala variabler
 
 var wordList = ['BLUES', 'RANGERS', 'HURRICANES', 'PENGUINS', 'KINGS', 'BRUINS', 'JETS', 'GOLDEN KNIGHTS', 'MIGHTY DUCKS', 'MAPLE LEAVES', 'LIGHTNING', 'BLACK HAWKS']; // Lista med spelets alla ord
 
-
 var selectedWord; // Ett av orden valt av en slumpgenerator
-var letterBoxes; //Rutorna där bokstäverna ska stå   //
+var letterBoxes; //Rutorna där bokstäverna ska stå   
 var startGameBtn; // Knappen du startar spelet med
 
 
+var startTime = 30;
 
 var hangmanLives = 6;
 var score = 0;
@@ -16,8 +15,6 @@ var score = 0;
 // Initiering av globala variabler samt koppling av funktioner till knapparna.
 function init() {
 
-	startGameBtn;
-	letterButtons;
 
 	document.querySelector('.btn').disabled = false;
 	document.querySelector('#startGameBtn').onclick = gameStart;
@@ -108,6 +105,7 @@ function btnClick () {
 		hangmanLives--;
 		incorrectGuess();
 		this.disabled = true;
+
 	}
 
 };
@@ -143,5 +141,6 @@ function deactivateButtons() {
 function resetGame() {
 	location.reload();
 }
+
 
 
